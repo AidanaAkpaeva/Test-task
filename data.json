@@ -1,15 +1,4 @@
 {
-   "categories":[
-      {
-         "detective":"Детектив",
-         "fantasy":"Фантастика",
-         "action":"Боевик",
-         "forKids":"Для детей",
-         "comedy":"Комедия",
-         "melodrama":"Мелодрама",
-         "adventure":"Приключения"
-      }
-   ],
    "detective":[
       {
          "name":"Достать ножи",

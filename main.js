@@ -1,4 +1,15 @@
 // connection JSON-file
+let DATA_genre;
+function getFile_genre(fileName_genre) {
+  let request = new XMLHttpRequest();
+  request.open('GET', fileName_genre);
+  request.onloadend = function () {
+    parse_genre(request.responseText);
+  }
+  request.send();
+}
+getFile_genre('genre.json');//путь к файлу
+
 let DATA;
 function getFile(fileName) {
   let request = new XMLHttpRequest();
@@ -9,85 +20,87 @@ function getFile(fileName) {
   request.send();
 }
 getFile('data.json');//путь к файлу
-  // creating variables
-  let main__container = document.getElementById('main__container');
-  let wrapper__pagination_block = document.createElement('div');
-  let wrapper__slider = document.createElement('div');
+
+// creating variables
+let main__container = document.getElementById('main__container');
+let categories = document.getElementById('categories');
+let movies = document.getElementById('movies');
+
+function parse_genre(obj) {
+
+  DATA_genre = JSON.parse(obj);
+  // cycle for categories
+  for (let i in DATA_genre) {
+
+    let button = document.createElement('button')
+    button.innerHTML = DATA_genre[i];
+    button.id = `btn_${i}`;
+    button.onclick = function () {  // замена фильмов на выбранный жанр
+      let id = button.id; 
+      id.replace('btn_', '');// удалить первые три символа и остальное будет жанром
+      main__container.innerHTML = '';
+      main__container.appendChild(document.getElementById(id));
+    }
+    if (DATA_genre[i] == DATA_genre.detective) {
+      categories.appendChild(button).classList.add('wrapper__pagination-active');
+    }
+    categories.appendChild(button).classList.add('wrapper__pagination');
+  }
+}
 
 
 function parse(obj) {
 
   DATA = JSON.parse(obj);
 
-  // cycle for categories
-  for (let i in DATA.categories) {
-    for (let j in DATA.categories[i]) {
-      let button = document.createElement('button')
-      button.innerHTML = DATA.categories[i][j];
-      if (DATA.categories[i][j] == DATA.categories[i].detective) {
-        wrapper__pagination_block.appendChild(button).classList.add('wrapper__pagination-active');
+  for (let genre in DATA) {
+  
+    // в цикле ниже добавляем все элементы в tab, а не в main__container
+    for (let film_info in DATA[genre]) {
+      let tab_name_movies = document.createElement('div');
+      let img_movies = document.createElement('div');
+      let main_movies = document.createElement('div');
+      let tab_descr_movies = document.createElement('div');
+      let img_name = document.createElement('input');
+
+      let inner__list = document.createElement('ul');
+      let h2 = document.createElement('h2');
+      let li_1 = document.createElement('li');
+      let li_2 = document.createElement('li');
+      let li_3 = document.createElement('li');
+      let li_4 = document.createElement('li');
+      let li_5 = document.createElement('li');
+
+      movies.appendChild(tab_name_movies).id = `tab_${genre}`;
+      tab_name_movies.appendChild(main_movies).id = 'main_movies';
+      main_movies.appendChild(tab_descr_movies).id = 'tab_descr_movies';
+
+      img_movies.appendChild(img_name).type = 'button';
+      img_name.classList.add('img_name');
+      img_name.style.backgroundImage = DATA[genre][film_info].url;
+
+      tab_name_movies.appendChild(img_movies).classList.add('img_movies');
+
+      h2.innerHTML = DATA[genre][film_info].name;
+      tab_descr_movies.appendChild(h2).classList.add('inner__title');
+
+      li_1.innerHTML = DATA[genre][film_info].country;
+      li_2.innerHTML = DATA[genre][film_info].genre;
+      li_3.innerHTML = DATA[genre][film_info].agelimit;
+      inner__list.appendChild(li_1).classList.add('inner__item');
+      inner__list.appendChild(li_2).classList.add('inner__item');
+      inner__list.appendChild(li_3).classList.add('inner__item');
+
+      for (let j in DATA[genre][film_info].rating) {
+        li_4.innerHTML = DATA[genre][film_info].rating[j].IMBd;
+        li_5.innerHTML = DATA[genre][film_info].rating[j].Kinopoisk;
+        inner__list.appendChild(li_4).classList.add('inner__item');
+        inner__list.appendChild(li_5).classList.add('inner__item');
       }
-      wrapper__pagination_block.appendChild(button).classList.add('wrapper__pagination');
-    }
-  }
 
-  //cycle for movie
-  for (let i in DATA.detective) {
-    let wrapper__slider_item = document.createElement('div');
-    let padinations_block = document.createElement('div');
-
-    let wrapper__container = document.createElement('div');
-    let inner__slider = document.createElement('div');
-  
-    let inner__container = document.createElement('div');
-    let inner__slider_item = document.createElement('div');
-    let inner__list = document.createElement('ul');
-    let inner__pagination = document.createElement('input');
-    
-    let h2 = document.createElement('h2');
-    let li_1 = document.createElement('li');
-    let li_2 = document.createElement('li');
-    let li_3 = document.createElement('li');
-    let li_4 = document.createElement('li');
-    let li_5 = document.createElement('li');
-    
-    wrapper__slider.appendChild(wrapper__container).id = ('wrapper__container');
-  
-    main__container.appendChild(wrapper__slider).classList.add('wrapper__slider');
-
-
-    wrapper__slider.appendChild(wrapper__pagination_block).id = ('wrapper__pagination_block');
-
-    
-    wrapper__container.classList.add('wrapper__container');
-    wrapper__container.appendChild(wrapper__slider_item).classList.add('wrapper__slider_item');
-    wrapper__slider_item.appendChild(inner__slider).classList.add('inner__slider');
-
-    inner__slider.appendChild(padinations_block).id = 'padinations-block';
-    inner__slider.appendChild(inner__container).classList.add('inner__container');
-    inner__container.appendChild(inner__slider_item).classList.add('inner__slider_item');
-
-    h2.innerHTML = DATA.detective[i].name;
-    inner__slider_item.appendChild(h2).classList.add('inner__title');
-    
-    li_1.innerHTML = DATA.detective[i].country;
-    li_2.innerHTML = DATA.detective[i].genre;
-    li_3.innerHTML = DATA.detective[i].agelimit;
-    inner__list.appendChild(li_1).classList.add('inner__item');
-    inner__list.appendChild(li_2).classList.add('inner__item');
-    inner__list.appendChild(li_3).classList.add('inner__item');
-
-    for(let j in DATA.detective[i].rating) {
-      li_4.innerHTML = DATA.detective[i].rating[j].IMBd;
-      li_5.innerHTML = DATA.detective[i].rating[j].Kinopoisk;
-      inner__list.appendChild(li_4).classList.add('inner__item');
-      inner__list.appendChild(li_5).classList.add('inner__item');
-      inner__slider_item.appendChild(inner__list).classList.add('inner__list', 'list-reset');
+      tab_descr_movies.appendChild(inner__list).classList.add('inner__list', 'list-reset');
     }
 
-    padinations_block.appendChild(inner__pagination).type = 'button';
-    inner__pagination.classList.add('inner__pagination');
-    inner__pagination.style.backgroundImage = DATA.detective[i].url;
   }
 }
 
