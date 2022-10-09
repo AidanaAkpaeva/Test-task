@@ -1,4 +1,4 @@
-{
+{"categories":[{
    "detective":"Детектив",
    "fantasy":"Фантастика",
    "action":"Боевик",
@@ -6,4 +6,5 @@
    "comedy":"Комедия",
    "melodrama":"Мелодрама",
    "adventure":"Приключения"
+}]
 }

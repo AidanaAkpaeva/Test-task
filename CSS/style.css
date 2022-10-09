@@ -204,10 +204,14 @@ img {
 	transition: 0.05s;
 }
 
+.tab_name_movies {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
 .img_movies {
 	display: flex;
 	justify-content: center;
-	bottom: 10px;
 	margin: 0 20px;
 }
 
