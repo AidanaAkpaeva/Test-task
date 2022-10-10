@@ -1,39 +1,337 @@
-// connection JSON-file
-let DATA;
-function getFile(fileName) {
-  let request = new XMLHttpRequest();
-  request.open('GET', fileName);
-  request.onloadend = function () {
-    parse(request.responseText);
-  }
-  request.send();
+let DATA_movies = {
+  "detective": [
+    {
+      "name": "Достать ножи",
+      "country": "США, 2019",
+      "genre": "Детектив, Комедия, Драма, Криминал",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.9",
+          "Kinopoisk": "Кинопоиск: 8.0"
+        }
+      ],
+      "url": "url('/img/getTheKnives.jpeg')"
+    },
+    {
+      "name": "Черный ящик",
+      "country": "Франция, 2020",
+      "genre": "Детектив, Триллер",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.9",
+          "Kinopoisk": "Кинопоиск: 7.6"
+        }
+      ],
+      "url": "url('/img/blackBox.jpeg')"
+    },
+    {
+      "name": "Девушка с татуировкой дракона ",
+      "country": "США, Швеция, Норвегия 2011",
+      "genre": "Детектив, Триллер, Драма, Криминал",
+      "agelimit": "18+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.1",
+          "Kinopoisk": "Кинопоиск: 7.7"
+        }
+      ],
+      "url": "url('/img/girl.jpeg')"
+    },
+    {
+      "name": "Бэтмен",
+      "country": "США, 2022",
+      "genre": "Детектив, Криминал, Драма, Боевик",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.6",
+          "Kinopoisk": "Кинопоиск: 7.9"
+        }
+      ],
+      "url": "url('/img/batman.jpeg')"
+    }
+  ],
+  "fantasy": [
+    {
+      "name": "Аватар",
+      "country": "США, 2009",
+      "genre": "Фантастика, Боевик, Драма, Приключения",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.8",
+          "Kinopoisk": "Кинопоиск: 8.0"
+        }
+      ],
+      "url": "url('/img/avatar.jpeg')"
+    },
+    {
+      "name": "Начало",
+      "country": "США, Великобритания, 2010",
+      "genre": "Фантастика, Боевик, Триллер, Детектив",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 8.8",
+          "Kinopoisk": "Кинопоиск: 8.7"
+        }
+      ],
+      "url": "url('/img/inception.jpeg')"
+    },
+    {
+      "name": "Интерстеллар",
+      "country": "США, Великобритания, Канада, 2014",
+      "genre": "Фантастика, Драма, Приключения",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 8.6",
+          "Kinopoisk": "Кинопоиск: 8.6"
+        }
+      ],
+      "url": "url('/img/Interstellar.jpeg')"
+    }
+  ],
+  "action": [
+    {
+      "name": "Гнев человеческий",
+      "country": "Великобритания, США, 2021",
+      "genre": "Боевик, Триллер",
+      "agelimit": "18+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.1",
+          "Kinopoisk": "Кинопоиск: 7.6"
+        }
+      ],
+      "url": "url('/img/wrathOfMan.jpeg')"
+    },
+    {
+      "name": "Брат 2",
+      "country": "Россия, США, 2000",
+      "genre": "Боевик, Криминал",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.8",
+          "Kinopoisk": "Кинопоиск: 8.2"
+        }
+      ],
+      "url": "url('/img/brother.jpeg')"
+    },
+    {
+      "name": "Шерлок Холмс",
+      "country": "США, 2022",
+      "genre": "Боевик, Приключения, Триллер, Комедия",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.6",
+          "Kinopoisk": "Кинопоиск: 8.1"
+        }
+      ],
+      "url": "url('/img/SherlockHolmes.jpeg')"
+    }
+  ],
+  "forKids": [
+    {
+      "name": "Один дома",
+      "country": "США, 1990",
+      "genre": "Комедия, Семейный",
+      "agelimit": "0+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.7",
+          "Kinopoisk": "Кинопоиск: 8.3"
+        }
+      ],
+      "url": "url('/img/HomeAlone.jpeg')"
+    },
+    {
+      "name": "Назад в будущее",
+      "country": "США, 1985",
+      "genre": "Фантастика, Комедия, Приключения",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 8.5",
+          "Kinopoisk": "Кинопоиск: 8.6"
+        }
+      ],
+      "url": "url('/img/BackToTheFuture.jpeg')"
+    },
+    {
+      "name": "Гарри Поттер и философский камень",
+      "country": "США, Великобритания, 2001",
+      "genre": "Фэнтези, Приключения, Семейный",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.3",
+          "Kinopoisk": "Кинопоиск: 8.2"
+        }
+      ],
+      "url": "url('/img/HarryPotter.jpeg')"
+    }
+  ],
+  "comedy": [
+    {
+      "name": "Круэлла",
+      "country": "США, Великобритания, 2021",
+      "genre": "Комедия, Криминал, Драма",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.3",
+          "Kinopoisk": "Кинопоиск: 7.5"
+        }
+      ],
+      "url": "url('/img/Cruella.jpeg')"
+    },
+    {
+      "name": "Отель Гранд Будапешт",
+      "country": "США, Германия, 2014",
+      "genre": "Комедия, Приключения, Детектив, Криминал",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 8.4",
+          "Kinopoisk": "Кинопоиск: 7.9"
+        }
+      ],
+      "url": "url('/img/TheGrandBudapestHotel.jpeg')"
+    },
+    {
+      "name": "Лулу и Бриггс",
+      "country": "США, 2021",
+      "genre": "Комедия, Драма, Приключения",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 6.5",
+          "Kinopoisk": "Кинопоиск: 7.4"
+        }
+      ],
+      "url": "url('/img/Dog.jpeg')"
+    }
+  ],
+  "melodrama": [
+    {
+      "name": "Титаник",
+      "country": "США, Мексика, 1997",
+      "genre": "Мелодрама, История, Триллер, Драма",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.9",
+          "Kinopoisk": "Кинопоиск: 8.4"
+        }
+      ],
+      "url": "url('/img/Titanic.jpeg')"
+    },
+    {
+      "name": "Стажёр",
+      "country": "США, 2015",
+      "genre": "Мелодрама, Комедия",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.1",
+          "Kinopoisk": "Кинопоиск: 7.6"
+        }
+      ],
+      "url": "url('/img/TheIntern.jpeg')"
+    },
+    {
+      "name": "Укрощение строптивого",
+      "country": "Италия, 1980",
+      "genre": "Мелодрама, Комедия",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 7.6",
+          "Kinopoisk": "Кинопоиск: 8.4"
+        }
+      ],
+      "url": "url('/img/IlBisbeticoDomato.jpeg')"
+    }
+  ],
+  "adventure": [
+    {
+      "name": "Выживший",
+      "country": "США, Гонконг, Тайвань, 2015",
+      "genre": "Приключения, Вестерн, Боевик, Драма, Биография",
+      "agelimit": "18+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 8.0",
+          "Kinopoisk": "Кинопоиск: 7.8"
+        }
+      ],
+      "url": "url('/img/TheRevenant.jpeg')"
+    },
+    {
+      "name": "Парк Юрского периода",
+      "country": "США, 1993",
+      "genre": "Приключения, Фантастика, Семейный",
+      "agelimit": "16+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 8.2",
+          "Kinopoisk": "Кинопоиск: 7.8"
+        }
+      ],
+      "url": "url('/img/JurassicPark.jpeg')"
+    },
+    {
+      "name": "Восточный ветер",
+      "country": "США, 2013",
+      "genre": "Приключения, Семейный, Драма",
+      "agelimit": "12+",
+      "rating": [
+        {
+          "IMBd": "IMDb: 6.7",
+          "Kinopoisk": "Кинопоиск: 8.1"
+        }
+      ],
+      "url": "url('/img/Ostwind.jpeg')"
+    }
+  ]
+
 }
-getFile('data.json');//путь к файлу
 
+let DATA_genre = {
+  "detective": "Детектив",
+  "fantasy": "Фантастика",
+  "action": "Боевик",
+  "forKids": "Для детей",
+  "comedy": "Комедия",
+  "melodrama": "Мелодрама",
+  "adventure": "Приключения"
+}
 
-// creating variables
-let main__container = document.getElementById('main__container');
-let categories = document.getElementById('categories');
+let movies_div_contener = document.getElementById('movies')
+let categories_div_container = document.getElementById('categories')
 
-categories.classList.add('tab');
-let movies = document.getElementById('movies');
+function set_categories() {
+  categories_div_container.innerHTML = ''; //очищаем, когда нажимается кнопка и заполняется новыми данными
+  for (let genre_name in DATA_genre) {
+    let btn = document.createElement('button');
+    btn.innerHTML = DATA_genre[genre_name];
+    btn.id = `btn_${genre_name}`;
+    btn.classList.add('btn_categories');
 
-function parse(obj) {
-  let id_categories;
-  let id_movies;
-
-  DATA = JSON.parse(obj);
-  
-  for (let film in DATA.movies) {
-    // в цикле ниже добавляем все элементы в tab, а не в main__container
-    for (let genre in DATA.movies[film]) {
-      for (let film_info in DATA.movies[film][genre]) {
-        let tab_name_movies = document.createElement('div');
-        let tab_movies_container = document.createElement('div');
-        let img_movies = document.createElement('div');
-        let main_movies = document.createElement('div');
-        let tab_descr_movies = document.createElement('div');
-        let img_name = document.createElement('input');
+    btn.onclick = function () {
+      clicked = true;
+      movies_div_contener.innerHTML = '';
+      // заполнение  div movies
+      for (let film_info in DATA_movies[genre_name]) {
+        let main_movies = document.createElement('div'); //контейнер для фильма
+        let tab_descr_movies = document.createElement('div'); //описание фильма
+        let img_name = document.createElement('input'); //картинка для фильма
+        let img_movies = document.createElement('div'); //контейнер для картинки
 
         let inner__list = document.createElement('ul');
         let h2 = document.createElement('h2');
@@ -43,80 +341,46 @@ function parse(obj) {
         let li_4 = document.createElement('li');
         let li_5 = document.createElement('li');
 
-        movies.appendChild(tab_movies_container).classList.add('tabcontent');
-        tab_name_movies.id = `tab_${genre}`;
-
-          tab_movies_container.appendChild(tab_name_movies);
-      
-        tab_name_movies.appendChild(main_movies).id = 'main_movies';
+        movies.appendChild(main_movies).id = 'main_movies';
         main_movies.appendChild(tab_descr_movies).id = 'tab_descr_movies';
+        main_movies.appendChild(img_movies).id = 'img_movies';
 
         img_movies.appendChild(img_name).type = 'button';
-        img_name.classList.add('img_name');
-        img_name.style.backgroundImage = DATA.movies[film][genre][film_info].url;
+        img_name.id = 'img_name';
+        img_name.style.backgroundImage = DATA_movies[genre_name][film_info].url;
+        tab_descr_movies.innerHTML = ''
 
-        tab_name_movies.appendChild(img_movies).classList.add('img_movies');
+        // функция для загрузки описания фильмов
+        img_name.onclick = function () {
+          h2.innerHTML = DATA_movies[genre_name][film_info].name;
+          tab_descr_movies.appendChild(h2).classList.add('inner__title');
 
-        h2.innerHTML = DATA.movies[film][genre][film_info].name;
-        tab_descr_movies.appendChild(h2).classList.add('inner__title');
+          li_1.innerHTML = DATA_movies[genre_name][film_info].country;
+          li_2.innerHTML = DATA_movies[genre_name][film_info].genre;
+          li_3.innerHTML = DATA_movies[genre_name][film_info].agelimit;
+          inner__list.appendChild(li_1).classList.add('inner__item');
+          inner__list.appendChild(li_2).classList.add('inner__item');
+          inner__list.appendChild(li_3).classList.add('inner__item');
 
-        li_1.innerHTML = DATA.movies[film][genre][film_info].country;
-        li_2.innerHTML = DATA.movies[film][genre][film_info].genre;
-        li_3.innerHTML = DATA.movies[film][genre][film_info].agelimit;
-        inner__list.appendChild(li_1).classList.add('inner__item');
-        inner__list.appendChild(li_2).classList.add('inner__item');
-        inner__list.appendChild(li_3).classList.add('inner__item');
+          for (let j in DATA_movies[genre_name][film_info].rating) {
+            li_4.innerHTML = DATA_movies[genre_name][film_info].rating[j].IMBd;
+            li_5.innerHTML = DATA_movies[genre_name][film_info].rating[j].Kinopoisk;
+            inner__list.appendChild(li_4).classList.add('inner__item');
+            inner__list.appendChild(li_5).classList.add('inner__item');
+          }
 
-        for (let j in DATA.movies[film][genre][film_info].rating) {
-          li_4.innerHTML = DATA.movies[film][genre][film_info].rating[j].IMBd;
-          li_5.innerHTML = DATA.movies[film][genre][film_info].rating[j].Kinopoisk;
-          inner__list.appendChild(li_4).classList.add('inner__item');
-          inner__list.appendChild(li_5).classList.add('inner__item');
+          tab_descr_movies.appendChild(inner__list).classList.add('inner__list', 'list-reset');
+          
         }
 
-        tab_descr_movies.appendChild(inner__list).classList.add('inner__list', 'list-reset');
-        let id_movies_transition = document.getElementById(`tab_${genre})`);
-        id_movies = id_movies_transition;
       }
     }
-  }
 
-  for (let i in DATA.categories) {
-    for (let name_categories in DATA.categories[i]) {
-      let btn = document.createElement('button')
-      btn.innerHTML = DATA.categories[i][name_categories];
-      btn.id = `btn_${name_categories}`;
-      btn.onclick = function openCategories(evt) {
-        // Declare all variables
-        console.log('111');
-        var i, tabcontent, tablinks;
-      
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-      
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-      
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(`btn_${name_categories}`).style.display = "block";
-        evt.currentTarget.className += " active";
-      } 
-      
-      categories.appendChild(btn).classList.add('wrapper__pagination', 'tablinks');
-      let id_categories_transition = document.getElementById(`btn_${name_categories}`);
-      id_categories = id_categories_transition;
-    }
-    
+    categories_div_container.appendChild(btn)//.classList.add('wrapper__pagination');
   }
-
 }
 
+set_categories()
 
 
 // preloader
