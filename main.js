@@ -17,6 +17,8 @@ let categories = document.getElementById('categories');
 let movies = document.getElementById('movies');
 
 function parse(obj) {
+  let id_categories;
+  let id_movies;
 
   DATA = JSON.parse(obj);
   for (let i in DATA.categories) {
@@ -31,13 +33,16 @@ function parse(obj) {
         main__container.innerHTML = '';
         main__container.appendChild(document.getElementById(id));
       }
+      
       if (DATA.categories[i][name_categories] == DATA.categories[i].detective) {
         categories.appendChild(btn).classList.add('wrapper__pagination-active');
       }
       categories.appendChild(btn).classList.add('wrapper__pagination');
+      let id_categories_transition = document.getElementById(`btn_${name_categories}`);
+      id_categories = id_categories_transition;
     }
   }
-
+  
   for (let film in DATA.movies) {
     // в цикле ниже добавляем все элементы в tab, а не в main__container
     for (let genre in DATA.movies[film]) {
@@ -85,9 +90,18 @@ function parse(obj) {
         }
 
         tab_descr_movies.appendChild(inner__list).classList.add('inner__list', 'list-reset');
+        let id_movies_transition = document.getElementById(`tab_${genre})`);
+        id_movies = id_movies_transition;
       }
     }
   }
+
+  for(let elem in DATA) {
+    if (id_categories[elem].categories === id_movies[elem].movies) {
+      console.log('test');
+    }
+  }
+
 
 }
 
