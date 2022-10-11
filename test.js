@@ -11,16 +11,6 @@ function getFile(fileName) {
 
 getFile('data.json');//путь к файлу
 
-// creating variables
-let main__container = document.getElementById('main__container');
-let categories = document.getElementById('categories');
-
-categories.classList.add('tab');
-let movies = document.getElementById('movies');
-
-let id_categories;
-let id_movies;
-
 function DATA_movies() {
   for (let film in DATA.movies) {
     // в цикле ниже добавляем все элементы в tab, а не в main__container
@@ -91,6 +81,7 @@ function DATA_categories() {
         for (i = 0; i < tabcontent.length; i++) {
           tabcontent[i].style.display = "none";
         }
+        console.log(tabcontent);
 
         // Get all elements with class="tablinks" and remove the class "active"
         tablinks = document.getElementsByClassName("tablinks");
@@ -116,11 +107,64 @@ function parse(obj) {
   DATA_categories();
 }
 
-// preloader
-window.onload = function () {
-  document.body.classList.add('loaded__hiding');
-  window.setTimeout(function () {
-    document.body.classList.add('loaded');
-    document.body.classList.remove('loaded__hiding');
-  }, 500);
+
+
+for (let film_info in DATA_movies[genre_name]) {
+  let main_movies = document.createElement('div'); //контейнер для фильма
+  let tab_descr_movies = document.createElement('div'); //описание фильма
+  let img_name = document.createElement('input'); //картинка для фильма
+  let img_movies = document.createElement('div'); //контейнер для картинки
+
+  movies.appendChild(main_movies).id = 'main_movies';
+  main_movies.appendChild(tab_descr_movies).id = 'tab_descr_movies';
+  main_movies.appendChild(img_movies).id = 'img_movies';
+
+  img_movies.appendChild(img_name).type = 'button';
+  img_name.classList.add('img_name');
+  img_name.style.backgroundImage = DATA_movies[genre_name][film_info].url;
+
+  let inner__list = document.createElement('ul');
+  let h2 = document.createElement('h2');
+  let li_1 = document.createElement('li');
+  let li_2 = document.createElement('li');
+  let li_3 = document.createElement('li');
+  let li_4 = document.createElement('li');
+  let li_5 = document.createElement('li');
+
+
+  // функция для загрузки описания фильмов
+  img_name.onclick = function () {
+    let items_movies_active = document.querySelectorAll('.img_name-active');
+    if (items_movies_active.length > 0) {
+      for (let i = 0; i < items_movies_active.length; i++) {
+        items_movies_active[i].classList.remove('img_name-active');
+      }
+    }
+    img_name.classList.add('img_name-active');
+
+    tab_descr_movies.classList.add('tab_descr_movies');
+
+    let items_descr = document.querySelectorAll(`.tab_descr_movies`);
+
+
+    h2.innerHTML = DATA_movies[genre_name][film_info].name;
+    tab_descr_movies.appendChild(h2).classList.add('inner__title');
+
+    li_1.innerHTML = DATA_movies[genre_name][film_info].country;
+    li_2.innerHTML = DATA_movies[genre_name][film_info].genre;
+    li_3.innerHTML = DATA_movies[genre_name][film_info].agelimit;
+    inner__list.appendChild(li_1).classList.add('inner__item');
+    inner__list.appendChild(li_2).classList.add('inner__item');
+    inner__list.appendChild(li_3).classList.add('inner__item');
+
+    for (let j in DATA_movies[genre_name][film_info].rating) {
+      li_4.innerHTML = DATA_movies[genre_name][film_info].rating[j].IMBd;
+      li_5.innerHTML = DATA_movies[genre_name][film_info].rating[j].Kinopoisk;
+      inner__list.appendChild(li_4).classList.add('inner__item');
+      inner__list.appendChild(li_5).classList.add('inner__item');
+    }
+    tab_descr_movies.appendChild(inner__list).classList.add('inner__list', 'list-reset');
+
+  }
+
 }

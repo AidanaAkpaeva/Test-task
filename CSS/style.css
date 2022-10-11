@@ -152,11 +152,27 @@ img {
   overflow-x: scroll;
 }
 
+.btn_categories-active,
+.btn_categories:focus {
+	text-transform: uppercase;
+	font-weight: 600;
+	border-bottom: 5px solid var(--border-color);
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background-color: rgba(0, 0, 0, 0);
+	box-shadow: 0 5px 5px -5px var(--border-color);
+	opacity: 1;
+}
+
 
 /* main_movies */
 #movies {
   display: flex;
   justify-content: center;
+}
+
+#tab_name_movies {
+  display: flex;
 }
 
 #main_movies {
@@ -170,15 +186,28 @@ img {
   margin: 0 20px;
 }
 
-#img_name {
+.img_name {
   display: flex;
   width: 150px;
   height: 250px;
-  justify-content: center;
+  justify-content: top center;
   background-size: cover;
   border: none;
   cursor: pointer;
   outline: none;
+}
+
+.img_name-active,
+.img_name:focus {
+	display: flex;
+	text-transform: uppercase;
+	font-weight: 600;
+	border-bottom: 5px solid var(--border-color);
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-shadow: 0 5px 5px -5px var(--border-color);
+	opacity: 1;
+	padding: 10px;
 }
 
 .inner__title {
@@ -222,22 +251,4 @@ img {
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-.img_movies button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current img_movieslink class */
-.img_movies button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  /* display: none; */
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
 }
