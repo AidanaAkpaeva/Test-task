@@ -325,14 +325,14 @@ function handleInputFocusTransfer(e) {
   const index = focusable.indexOf(document.activeElement);
   // Создаем переменную для хранения индекса следующего элемента, который будет сфокусирован
   let nextIndex = 0;
-  if (e.keyCode === 38) {
+  if (e.keyCode === 37) {
     // up arrow
     e.preventDefault();
     nextIndex = index > 0 ? index - 1 : 0;
     focusableInputElements[nextIndex].focus();
     focusableInputElements[nextIndex].click();
   }
-  else if (e.keyCode === 40) {
+  else if (e.keyCode === 39) {
     // down arrow
     e.preventDefault();
     nextIndex = index + 1 < focusable.length ? index + 1 : index;

@@ -33,7 +33,7 @@ body {
   margin: 0;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   background-repeat: no-repeat;
-  background-position: center;
+  /* background-position: center; */
   background-size: cover;
   background-color: rgb(16, 17, 29);
   backdrop-filter: blur(10px);
