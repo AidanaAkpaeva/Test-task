@@ -312,32 +312,48 @@ let DataGenre = {
   "adventure": "Приключения"
 }
 
-let moviesDivContener = document.getElementById('movies')
-let categoriesDivContainer = document.getElementById('categories')
+var moviesDivContener = document.getElementById('movies')
+var categoriesDivContainer = document.getElementById('categories');
 
-//получаем фокус
-document.addEventListener('keydown', handleInputFocusTransfer);
-function handleInputFocusTransfer(e) {
-  const focusableInputElements = document.getElementsByTagName("*");
-  // Создание массива из списка узлов
-  const focusable = [...focusableInputElements];
-  //получаем индекс текущего элемента
-  const index = focusable.indexOf(document.activeElement);
-  // Создаем переменную для хранения индекса следующего элемента, который будет сфокусирован
-  let nextIndex = 0;
-  if (e.keyCode === 37) {
-    // up arrow
-    e.preventDefault();
-    nextIndex = index > 0 ? index - 1 : 0;
-    focusableInputElements[nextIndex].focus();
-    focusableInputElements[nextIndex].click();
+document.addEventListener('keydown', changeFocus);
+function changeFocus(e) {
+  var focusableElements = document.getElementsByClassName('header__item');
+
+  var arrayFocusableElem = [];
+
+  for (var i of focusableElements) {
+    arrayFocusableElem.push(i);
   }
-  else if (e.keyCode === 39) {
-    // down arrow
-    e.preventDefault();
-    nextIndex = index + 1 < focusable.length ? index + 1 : index;
-    focusableInputElements[nextIndex].focus();
-    focusableInputElements[nextIndex].click();
+
+  var index = arrayFocusableElem.indexOf(document.activeElement);
+  var nextIndex = 0;
+  //влево
+  if (e.keyCode === 37) {
+    nextIndex = index > 0 ? index - 1 : 0;
+    focusableElements[nextIndex].focus();
+    focusableElements[nextIndex].click();
+  }
+  //вправо
+  if (e.keyCode === 39) {
+    nextIndex = index > 0 ? index + 1 : index;
+    focusableElements[nextIndex].focus();
+    focusableElements[nextIndex].click();
+  }
+
+  //вверх
+  if (e.keyCode === 38) {
+    console.log('вверх');
+    // nextIndex = index < 0 ? index + 2 : index;
+    // focusableElements[nextIndex].focus();
+    // focusableElements[nextIndex].click();
+  }
+
+  //вниз
+  if (e.keyCode === 40) {
+    console.log('вниз');
+    // nextIndex = index > 0 ? index - 1 : 0;
+    // focusableElements[nextIndex].focus();
+    // focusableElements[nextIndex].click();
   }
 }
 
@@ -345,13 +361,12 @@ function handleInputFocusTransfer(e) {
 function setDescripltionFilm(genreName) {
   moviesDivContener.innerHTML = '';
   let tabNameMovies = document.createElement('div');
+  let test = document.createElement('div');
   let mainMovies = document.createElement('div');
   let tabDescrMovies = document.createElement('div');
 
   // контейнер с описанием фильма 
   for (let filmInfo in DataMovies[genreName]) {
-    // let body = document.getElementsByClassName('body');
-
     let filmName = document.createElement('input');
     tabNameMovies.appendChild(filmName).type = 'button';
     filmName.id = `film_name_${filmInfo}`;
@@ -359,9 +374,7 @@ function setDescripltionFilm(genreName) {
     filmName.style.backgroundImage = DataMovies[genreName][filmInfo].url;
 
     filmName.onclick = function () {
-    // filmName.style.position = 'absolute'
-    // filmName.style.height = '50%'
-    filmName.style.backgroundRepeat = 'no-repeat';
+      filmName.style.backgroundRepeat = 'no-repeat';
       let itemsMoviesActive = document.querySelectorAll('.btn_movies-active');
       if (itemsMoviesActive.length > 0) {
         for (let i = 0; i < itemsMoviesActive.length; i++) {
@@ -405,7 +418,9 @@ function setDescripltionFilm(genreName) {
       filmName.classList.add('btn_movies-active');
     }
   }
-  moviesDivContener.appendChild(tabNameMovies).id = 'tabName_movies';
+  moviesDivContener.appendChild(test).id = 'test';
+  test.appendChild(tabNameMovies).id = 'tabName_movies';
+
   moviesDivContener.appendChild(mainMovies).id = 'mainMovies';
 }
 
@@ -444,7 +459,6 @@ function setCategories() {
 
 setCategories();
 
-// preloader
 window.onload = function () {
   document.body.classList.add('loaded__hiding');
   window.setTimeout(function () {
