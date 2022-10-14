@@ -315,45 +315,61 @@ var DataGenre = {
 var moviesDivContener = document.getElementById('movies')
 var categoriesDivContainer = document.getElementById('categories');
 
+//смещение фокуса
 document.addEventListener('keydown', changeFocus);
 function changeFocus(e) {
-  var focusableElements = document.getElementsByClassName('header__item');
+  var headers = document.getElementsByClassName('header__item');
+  var films = document.getElementsByClassName('btn_movies');
+  var categ = document.getElementsByClassName('btn_categories');
 
+  var htmlCollec = [headers, categ, films];
   var arrayFocusableElem = [];
+  var indexCol = -1;
+  var indexRow = -1;
 
-  for (var i of focusableElements) {
-    arrayFocusableElem.push(i);
+  for (var i = 0; i < htmlCollec.length; i++) {
+    var array = [];
+    for (var j = 0; j < htmlCollec[i].length; j++) {
+      array.push(htmlCollec[i][j]);
+    }
+    arrayFocusableElem.push(array);
+    if (indexCol === -1) {
+      indexCol = array.indexOf(document.activeElement);
+      indexRow = i;
+    }
+    else if (indexRow === -1) {
+      indexRow = array.indexOf(document.activeElement);
+      indexCol = j;
+    }
   }
 
-  var index = arrayFocusableElem.indexOf(document.activeElement);
-  var nextIndex = 0;
+  var nextIndexCol = 0;
+  var nextIndexRow = 0;
+
   //влево
   if (e.keyCode === 37) {
-    nextIndex = index > 0 ? index - 1 : 0;
-    focusableElements[nextIndex].focus();
-    focusableElements[nextIndex].click();
+    nextIndexCol = indexCol > 0 ? indexCol - 1 : 0;
+    arrayFocusableElem[indexRow][nextIndexCol].focus();
+    arrayFocusableElem[indexRow][nextIndexCol].click();
   }
   //вправо
-  if (e.keyCode === 39) {
-    nextIndex = index > 0 ? index + 1 : index;
-    focusableElements[nextIndex].focus();
-    focusableElements[nextIndex].click();
+  else if (e.keyCode === 39) {
+    nextIndexCol = indexCol < arrayFocusableElem[indexRow].length ? indexCol + 1 : arrayFocusableElem[indexRow].length;
+    arrayFocusableElem[indexRow][nextIndexCol].focus();
+    arrayFocusableElem[indexRow][nextIndexCol].click();
   }
 
   //вверх
-  if (e.keyCode === 38) {
-    console.log('вверх');
-    // nextIndex = index < 0 ? index + 2 : index;
-    // focusableElements[nextIndex].focus();
-    // focusableElements[nextIndex].click();
+  else if (e.keyCode === 38) {
+    nextIndexRow = indexRow > 0 ? indexRow - 1 : 0;
+    arrayFocusableElem[nextIndexRow][indexCol].focus();
+    arrayFocusableElem[nextIndexRow][indexCol].click();
   }
-
   //вниз
-  if (e.keyCode === 40) {
-    console.log('вниз');
-    // nextIndex = index > 0 ? index - 1 : 0;
-    // focusableElements[nextIndex].focus();
-    // focusableElements[nextIndex].click();
+  else if (e.keyCode === 40) {
+    nextIndexRow = indexRow < arrayFocusableElem[indexCol].length ? indexRow + 1 : arrayFocusableElem[indexCol].length;
+    arrayFocusableElem[nextIndexRow][indexCol].focus();
+    arrayFocusableElem[nextIndexRow][indexCol].click();
   }
 }
 
@@ -369,27 +385,24 @@ function setDescripltionFilm(genreName) {
   for (let filmInfo in DataMovies[genreName]) {
     let filmName = document.createElement('input');
     tabNameMovies.appendChild(filmName).type = 'button';
-    filmName.id = `film_name_${filmInfo}`;
+    filmName.id = 'film_name_' + String(filmInfo);
     filmName.className = 'btn_movies';
     filmName.style.backgroundImage = DataMovies[genreName][filmInfo].url;
 
-    var index = filmName.offsetWidth;
-    var ind = 0;
     filmName.onclick = function () {
-      filmName.style.backgroundRepeat = 'no-repeat';
-      var itemsMoviesActive = document.querySelectorAll('.btn_movies-active');
-      // if (ind >= itemsMoviesActive.length) {
-      //   itemsMoviesActive[ind - 1];
-      //   filmName.style.left = index + 180 + 'px';
-      //   ind = 0;
-      //   // filmName.style.left = index - 180 + 'px';
-      // }
-      // else {
-      //   itemsMoviesActive[ind - 1];
-      //   // filmName.style.left = index - 180 + 'px';
-      //   // ind = 0;
-      //   filmName.style.left = index + 180 + 'px';
-      // }
+
+      var mov = document.getElementsByClassName('btn_movies');
+      var arrMov = [mov];
+      
+      var width = filmName.offsetWidth;
+    
+      for (var i = 0; i < arrMov.length; i++) {
+        if (arrMov[i] !== -1) {
+          filmName.style.right = width + 180 + 'px';
+        }
+      }
+
+      var itemsMoviesActive = document.getElementsByClassName('.btn_movies-active');
       if (itemsMoviesActive.length > 0) {
         for (var i = 0; i < itemsMoviesActive.length; i++) {
           itemsMoviesActive[i].className = 'btn_movies';
@@ -416,13 +429,13 @@ function setDescripltionFilm(genreName) {
       filmInfoAge.innerHTML = DataMovies[genreName][filmInfo].agelimit;
       innerList.appendChild(filmInfoCountry).className = 'inner__item';
       innerList.appendChild(filmInfoGenre).className = 'inner__item';
-      innerList.appendChild(filmInfoAge).className = 'inner__item'; 
+      innerList.appendChild(filmInfoAge).className = 'inner__item';
       innerList.appendChild(filmInfoAge).className += ' ageLimit';
 
       for (let ratingInfo in DataMovies[genreName][filmInfo].rating) {
         filmInfoIBMd.innerHTML = DataMovies[genreName][filmInfo].rating[ratingInfo].IMBd;
         filmInfoKinopoisk.innerHTML = DataMovies[genreName][filmInfo].rating[ratingInfo].Kinopoisk;
-        innerList.appendChild(filmInfoIBMd).className = 'inner__item'; 
+        innerList.appendChild(filmInfoIBMd).className = 'inner__item';
         innerList.appendChild(filmInfoIBMd).className += ' rating';
         innerList.appendChild(filmInfoKinopoisk).className = 'inner__item';
         innerList.appendChild(filmInfoKinopoisk).className += ' rating';
@@ -446,9 +459,9 @@ function setCategories() {
   categoriesDivContainer.innerHTML = '';
 
   for (let genreName in DataGenre) {
-    let btn = document.createElement('button');
+    var btn = document.createElement('button');
     btn.innerHTML = DataGenre[genreName];
-    btn.id = `btn_${genreName}`;
+    btn.id = 'btn_' + String(genreName);
     btn.className = 'btn_categories';
 
     btn.onclick = function () {
@@ -479,7 +492,6 @@ setCategories();
 window.onload = function () {
   document.body.className = 'loaded__hiding';
   window.setTimeout(function () {
-    document.body.className = 'loaded';
     document.body.className = 'loaded';
   }, 500);
 }

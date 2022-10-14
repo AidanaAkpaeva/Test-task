@@ -79,6 +79,8 @@ img {
 }
 
 .header__item {
+  outline: none;
+  border: none;
   margin-right: 25px;
   width: 52px;
   height: 52px;
@@ -119,6 +121,7 @@ img {
 
 /* categories */
 #categories {
+  position: relative;
   display: flex;
   overflow-x: scroll;
   margin-bottom: 20px;
@@ -144,6 +147,7 @@ img {
 }
 
 .btn_categories:focus {
+  outline: none;
 	opacity: 1;
 	border-bottom: 5px solid #1992ca;
 	border-bottom-left-radius: 3px;
@@ -151,7 +155,6 @@ img {
 	background-color: rgba(0, 0, 0, 0);
 	box-shadow: 0 5px 5px -5px #1992ca;
 }
-
 
 /* main_movies */
 #movies {
@@ -166,7 +169,8 @@ img {
 
 #tabName_movies {
   display: flex;
-  /* width: 150px; */
+  overflow: visible;
+  width: 150px;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -174,9 +178,9 @@ img {
 }
 
 .btn_movies {
-  position: relative;
+  display: flex;
+  flex-shrink: 0;
   width: 150px;
-  overflow: hidden;
   height: 250px;
   background-size: cover;
   border: none;
@@ -191,12 +195,13 @@ img {
 }
 
 .btn_movies-active {
-  /* position: absolute; */
+  position: absolute;
   border-radius: 5px;
 	padding: 10px;
 }
 
 .btn_movies:focus {
+  outline: none;
   border-radius: 5px;
 	border-bottom: 5px solid #1992ca;
   box-shadow: 0 5px 5px -5px #1992ca;
