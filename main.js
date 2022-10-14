@@ -377,7 +377,8 @@ function changeFocus(e) {
 function setDescripltionFilm(genreName) {
   moviesDivContener.innerHTML = '';
   var tabNameMovies = document.createElement('div');
-  var test = document.createElement('div');
+  var moviesLeft = document.createElement('div');
+  var moviesRight = document.createElement('div');
   var mainMovies = document.createElement('div');
   var tabDescrMovies = document.createElement('div');
 
@@ -390,21 +391,9 @@ function setDescripltionFilm(genreName) {
     filmName.style.backgroundImage = DataMovies[genreName][filmInfo].url;
 
     filmName.onclick = function () {
-      // var mov = document.getElementsByClassName('btn_movies');
-      // var arrMov = [mov];
-      
-      // var width = filmName.offsetWidth;
-    
-      // for (var i = 0; i < arrMov.length; i++) {
-      //   if (arrMov[i] !== -1) {
-      //     filmName.style.right = width + 400 + 'px';
-      //   }
-      // }
-
-
-      let itemsMoviesActive = document.getElementsByClassName('btn_movies-active');
+      var itemsMoviesActive = document.getElementsByClassName('btn_movies-active');
       if (itemsMoviesActive.length > 0) {
-        for (let i = 0; i < itemsMoviesActive.length; i++) {
+        for (var i = 0; i < itemsMoviesActive.length; i++) {
           itemsMoviesActive[i].className = 'btn_movies';
         }
       }
@@ -442,15 +431,37 @@ function setDescripltionFilm(genreName) {
       }
       tabDescrMovies.appendChild(innerList).className = 'inner__list';
       tabDescrMovies.appendChild(innerList).className += ' list-reset';
+
+      // добавление, удаление элементов из правой и левой частей
+      var elemMovies = document.getElementsByClassName('btn_movies');
+      console.log(elemMovies.length, elemMovies)
+      var arrMovies = [];
+
+
+      for (var i = 0; i < elemMovies.length; i++) {
+        arrMovies.push(elemMovies[i]);
+        // if (arrMovies[i] === document.activeElement) {
+        console.log(elemMovies[i]);
+
+        // }
+      }
+
+
+      // tabNameMovies.innerHTML = '';
+      // moviesLeft.innerHTML = '';
+      // moviesRight.innerHTML = '';
     }
+
     mainMovies.appendChild(tabDescrMovies).id = 'tab_descr_movies';
+
     if (filmName.id === 'film_name_0') {
       filmName.click();
       filmName.className += ' btn_movies-active';
     }
   }
-  moviesDivContener.appendChild(test).id = 'test';
-  test.appendChild(tabNameMovies).id = 'tabName_movies';
+  moviesDivContener.appendChild(tabNameMovies).id = 'tabName_movies';
+  moviesDivContener.appendChild(moviesLeft).id = 'movies_left';
+  moviesDivContener.appendChild(moviesRight).id = 'movies_right';
   moviesDivContener.appendChild(mainMovies).id = 'mainMovies';
 }
 

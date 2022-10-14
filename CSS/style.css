@@ -197,8 +197,7 @@ img {
 }
 
 .btn_movies-active {
-  position: absolute;
-  border-radius: 5px;
+  /* position: absolute; */
 	padding: 10px;
 }
 
