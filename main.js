@@ -390,21 +390,21 @@ function setDescripltionFilm(genreName) {
     filmName.style.backgroundImage = DataMovies[genreName][filmInfo].url;
 
     filmName.onclick = function () {
-
-      var mov = document.getElementsByClassName('btn_movies');
-      var arrMov = [mov];
+      // var mov = document.getElementsByClassName('btn_movies');
+      // var arrMov = [mov];
       
-      var width = filmName.offsetWidth;
+      // var width = filmName.offsetWidth;
     
-      for (var i = 0; i < arrMov.length; i++) {
-        if (arrMov[i] !== -1) {
-          filmName.style.right = width + 180 + 'px';
-        }
-      }
+      // for (var i = 0; i < arrMov.length; i++) {
+      //   if (arrMov[i] !== -1) {
+      //     filmName.style.right = width + 400 + 'px';
+      //   }
+      // }
 
-      var itemsMoviesActive = document.getElementsByClassName('.btn_movies-active');
+
+      let itemsMoviesActive = document.getElementsByClassName('btn_movies-active');
       if (itemsMoviesActive.length > 0) {
-        for (var i = 0; i < itemsMoviesActive.length; i++) {
+        for (let i = 0; i < itemsMoviesActive.length; i++) {
           itemsMoviesActive[i].className = 'btn_movies';
         }
       }
@@ -459,14 +459,14 @@ function setCategories() {
   categoriesDivContainer.innerHTML = '';
 
   for (let genreName in DataGenre) {
-    var btn = document.createElement('button');
+    let btn = document.createElement('button');
     btn.innerHTML = DataGenre[genreName];
     btn.id = 'btn_' + String(genreName);
     btn.className = 'btn_categories';
 
     btn.onclick = function () {
       //делаем кнопку активной по нажатию
-      var itemsGenreActive = document.querySelectorAll('.btn_categories-active');
+      var itemsGenreActive = document.getElementsByClassName('btn_categories-active');
       if (itemsGenreActive.length > 0) {
         for (var i = 0; i < itemsGenreActive.length; i++) {
           itemsGenreActive[i].className = 'btn_categories';

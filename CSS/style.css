@@ -36,6 +36,10 @@ img {
   width: 100%;
 }
 
+.main_container {
+  padding-bottom: 50px;
+}
+
 /* preloader */
 .preloader {
   position: fixed;
@@ -118,7 +122,6 @@ img {
   background-image: url(/img/menubar-settings-icon.png);
 }
 
-
 /* categories */
 #categories {
   position: relative;
@@ -169,8 +172,7 @@ img {
 
 #tabName_movies {
   display: flex;
-  overflow: visible;
-  width: 150px;
+  position: relative;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
