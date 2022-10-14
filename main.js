@@ -1,4 +1,4 @@
-let DataMovies = {
+var DataMovies = {
   "detective": [
     {
       "name": "Достать ножи",
@@ -302,7 +302,7 @@ let DataMovies = {
 
 }
 
-let DataGenre = {
+var DataGenre = {
   "detective": "Детектив",
   "fantasy": "Фантастика",
   "action": "Боевик",
@@ -360,67 +360,84 @@ function changeFocus(e) {
 //функция заполнения описания фильмов
 function setDescripltionFilm(genreName) {
   moviesDivContener.innerHTML = '';
-  let tabNameMovies = document.createElement('div');
-  let test = document.createElement('div');
-  let mainMovies = document.createElement('div');
-  let tabDescrMovies = document.createElement('div');
+  var tabNameMovies = document.createElement('div');
+  var test = document.createElement('div');
+  var mainMovies = document.createElement('div');
+  var tabDescrMovies = document.createElement('div');
 
   // контейнер с описанием фильма 
   for (let filmInfo in DataMovies[genreName]) {
     let filmName = document.createElement('input');
     tabNameMovies.appendChild(filmName).type = 'button';
     filmName.id = `film_name_${filmInfo}`;
-    filmName.classList.add('btn_movies');
+    filmName.className = 'btn_movies';
     filmName.style.backgroundImage = DataMovies[genreName][filmInfo].url;
 
+    var index = filmName.offsetWidth;
+    var ind = 0;
     filmName.onclick = function () {
       filmName.style.backgroundRepeat = 'no-repeat';
-      let itemsMoviesActive = document.querySelectorAll('.btn_movies-active');
+      var itemsMoviesActive = document.querySelectorAll('.btn_movies-active');
+      // if (ind >= itemsMoviesActive.length) {
+      //   itemsMoviesActive[ind - 1];
+      //   filmName.style.left = index + 180 + 'px';
+      //   ind = 0;
+      //   // filmName.style.left = index - 180 + 'px';
+      // }
+      // else {
+      //   itemsMoviesActive[ind - 1];
+      //   // filmName.style.left = index - 180 + 'px';
+      //   // ind = 0;
+      //   filmName.style.left = index + 180 + 'px';
+      // }
       if (itemsMoviesActive.length > 0) {
-        for (let i = 0; i < itemsMoviesActive.length; i++) {
-          itemsMoviesActive[i].classList.remove('btn_movies-active');
+        for (var i = 0; i < itemsMoviesActive.length; i++) {
+          itemsMoviesActive[i].className = 'btn_movies';
         }
       }
-      filmName.classList.add('btn_movies-active');
+      filmName.className += ' btn_movies-active';
 
       document.body.style.backgroundImage = DataMovies[genreName][filmInfo].url;
 
       tabDescrMovies.innerHTML = ''
-      let innerList = document.createElement('ul');
-      let innerTitle = document.createElement('h2');
-      let filmInfoCountry = document.createElement('li');
-      let filmInfoGenre = document.createElement('li');
-      let filmInfoAge = document.createElement('li');
-      let filmInfoIBMd = document.createElement('li');
-      let filmInfoKinopoisk = document.createElement('li');
+      var innerList = document.createElement('ul');
+      var innerTitle = document.createElement('h2');
+      var filmInfoCountry = document.createElement('li');
+      var filmInfoGenre = document.createElement('li');
+      var filmInfoAge = document.createElement('li');
+      var filmInfoIBMd = document.createElement('li');
+      var filmInfoKinopoisk = document.createElement('li');
 
       innerTitle.innerHTML = DataMovies[genreName][filmInfo].name;
-      tabDescrMovies.appendChild(innerTitle).classList.add('inner__title');
+      tabDescrMovies.appendChild(innerTitle).className = 'inner__title';
 
       filmInfoCountry.innerHTML = DataMovies[genreName][filmInfo].country;
       filmInfoGenre.innerHTML = DataMovies[genreName][filmInfo].genre;
       filmInfoAge.innerHTML = DataMovies[genreName][filmInfo].agelimit;
-      innerList.appendChild(filmInfoCountry).classList.add('inner__item');
-      innerList.appendChild(filmInfoGenre).classList.add('inner__item');
-      innerList.appendChild(filmInfoAge).classList.add('inner__item', 'ageLimit');
+      innerList.appendChild(filmInfoCountry).className = 'inner__item';
+      innerList.appendChild(filmInfoGenre).className = 'inner__item';
+      innerList.appendChild(filmInfoAge).className = 'inner__item'; 
+      innerList.appendChild(filmInfoAge).className += ' ageLimit';
 
       for (let ratingInfo in DataMovies[genreName][filmInfo].rating) {
         filmInfoIBMd.innerHTML = DataMovies[genreName][filmInfo].rating[ratingInfo].IMBd;
         filmInfoKinopoisk.innerHTML = DataMovies[genreName][filmInfo].rating[ratingInfo].Kinopoisk;
-        innerList.appendChild(filmInfoIBMd).classList.add('inner__item', 'rating');
-        innerList.appendChild(filmInfoKinopoisk).classList.add('inner__item', 'rating');
+        innerList.appendChild(filmInfoIBMd).className = 'inner__item'; 
+        innerList.appendChild(filmInfoIBMd).className += ' rating';
+        innerList.appendChild(filmInfoKinopoisk).className = 'inner__item';
+        innerList.appendChild(filmInfoKinopoisk).className += ' rating';
       }
-      tabDescrMovies.appendChild(innerList).classList.add('inner__list', 'list-reset');
+      tabDescrMovies.appendChild(innerList).className = 'inner__list';
+      tabDescrMovies.appendChild(innerList).className += ' list-reset';
     }
     mainMovies.appendChild(tabDescrMovies).id = 'tab_descr_movies';
     if (filmName.id === 'film_name_0') {
       filmName.click();
-      filmName.classList.add('btn_movies-active');
+      filmName.className += ' btn_movies-active';
     }
   }
   moviesDivContener.appendChild(test).id = 'test';
   test.appendChild(tabNameMovies).id = 'tabName_movies';
-
   moviesDivContener.appendChild(mainMovies).id = 'mainMovies';
 }
 
@@ -432,17 +449,17 @@ function setCategories() {
     let btn = document.createElement('button');
     btn.innerHTML = DataGenre[genreName];
     btn.id = `btn_${genreName}`;
-    btn.classList.add('btn_categories');
+    btn.className = 'btn_categories';
 
     btn.onclick = function () {
       //делаем кнопку активной по нажатию
-      let itemsGenreActive = document.querySelectorAll('.btn_categories-active');
+      var itemsGenreActive = document.querySelectorAll('.btn_categories-active');
       if (itemsGenreActive.length > 0) {
-        for (let i = 0; i < itemsGenreActive.length; i++) {
-          itemsGenreActive[i].classList.remove('btn_categories-active');
+        for (var i = 0; i < itemsGenreActive.length; i++) {
+          itemsGenreActive[i].className = 'btn_categories';
         }
       }
-      btn.classList.add('btn_categories-active');
+      btn.className += ' btn_categories-active';
 
       // заполнение  div movies
       setDescripltionFilm(genreName);
@@ -451,7 +468,7 @@ function setCategories() {
     //делаем кнопку активной после загрузки
     if (btn.id === 'btn_detective') {
       btn.click();
-      btn.classList.add('btn_categories-active');
+      btn.className += ' btn_categories-active';
     }
   }
 
@@ -460,9 +477,9 @@ function setCategories() {
 setCategories();
 
 window.onload = function () {
-  document.body.classList.add('loaded__hiding');
+  document.body.className = 'loaded__hiding';
   window.setTimeout(function () {
-    document.body.classList.add('loaded');
-    document.body.classList.remove('loaded__hiding');
+    document.body.className = 'loaded';
+    document.body.className = 'loaded';
   }, 500);
 }
