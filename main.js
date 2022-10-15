@@ -380,6 +380,7 @@ function setDescripltionFilm(genreName) {
   var moviesLeft = document.createElement('div');
   var moviesRight = document.createElement('div');
   var mainMovies = document.createElement('div');
+  var movies_wrapper = document.createElement('div');
   var tabDescrMovies = document.createElement('div');
 
   // контейнер с описанием фильма 
@@ -432,24 +433,24 @@ function setDescripltionFilm(genreName) {
       tabDescrMovies.appendChild(innerList).className = 'inner__list';
       tabDescrMovies.appendChild(innerList).className += ' list-reset';
 
+
       // добавление, удаление элементов из правой и левой частей
       var elemMovies = document.getElementsByClassName('btn_movies');
-      console.log(elemMovies.length, elemMovies)
       var arrMovies = [];
-
 
       for (var i = 0; i < elemMovies.length; i++) {
         arrMovies.push(elemMovies[i]);
-        // if (arrMovies[i] === document.activeElement) {
-        console.log(elemMovies[i]);
-
-        // }
       }
 
+      var active_elem_index = arrMovies.indexOf(document.activeElement);
 
-      // tabNameMovies.innerHTML = '';
-      // moviesLeft.innerHTML = '';
-      // moviesRight.innerHTML = '';
+      for (var i = 0; i < active_elem_index; i++) {
+        moviesLeft.appendChild(arrMovies[i]);
+      }
+      for (var i = active_elem_index + 1; i < arrMovies.length; i++) {
+        moviesRight.appendChild(arrMovies[i]);
+      }
+      tabNameMovies.appendChild(arrMovies[active_elem_index]);
     }
 
     mainMovies.appendChild(tabDescrMovies).id = 'tab_descr_movies';
@@ -459,15 +460,22 @@ function setDescripltionFilm(genreName) {
       filmName.className += ' btn_movies-active';
     }
   }
-  moviesDivContener.appendChild(tabNameMovies).id = 'tabName_movies';
-  moviesDivContener.appendChild(moviesLeft).id = 'movies_left';
-  moviesDivContener.appendChild(moviesRight).id = 'movies_right';
+  movies_wrapper.appendChild(moviesLeft).id = 'movies_left';
+  moviesLeft.className = 'movies_container';
+  movies_wrapper.appendChild(tabNameMovies).id = 'tabName_movies';
+  tabNameMovies.className = 'movies_container';
+  movies_wrapper.appendChild(moviesRight).id = 'movies_right';
+  moviesRight.className = 'movies_container';
+  moviesDivContener.appendChild(movies_wrapper).id = 'movies_wrapper';
   moviesDivContener.appendChild(mainMovies).id = 'mainMovies';
 }
 
 // основная функция - заполенение категорий фильмов
 function setCategories() {
   categoriesDivContainer.innerHTML = '';
+  var categoriesLeft = document.createElement('div');
+  var categoriesCenter = document.createElement('div');
+  var categoriesRight = document.createElement('div');
 
   for (let genreName in DataGenre) {
     let btn = document.createElement('button');
@@ -479,7 +487,7 @@ function setCategories() {
       //делаем кнопку активной по нажатию
       var itemsGenreActive = document.getElementsByClassName('btn_categories-active');
       if (itemsGenreActive.length > 0) {
-        for (var i = 0; i < itemsGenreActive.length; i++) {
+        for (let i = 0; i < itemsGenreActive.length; i++) {
           itemsGenreActive[i].className = 'btn_categories';
         }
       }
@@ -487,13 +495,40 @@ function setCategories() {
 
       // заполнение  div movies
       setDescripltionFilm(genreName);
+
+      // добавление, удаление элементов из правой и левой частей
+      var elemCategories = document.getElementsByClassName('btn_categories');
+      var arrCategories = [];
+
+      for (var i = 0; i < elemCategories.length; i++) {
+        arrCategories.push(elemCategories[i]);
+      }
+
+      var active_elem_index = arrCategories.indexOf(document.activeElement);
+
+      for (var i = 0; i < active_elem_index; i++) {
+        categoriesLeft.appendChild(arrCategories[i]);
+      }
+      for (var i = active_elem_index + 1; i < arrCategories.length; i++) {
+        categoriesRight.appendChild(arrCategories[i]);
+      }
+
+      categoriesCenter.appendChild(arrCategories[active_elem_index]);
     }
-    categoriesDivContainer.appendChild(btn);
+
     //делаем кнопку активной после загрузки
     if (btn.id === 'btn_detective') {
       btn.click();
       btn.className += ' btn_categories-active';
     }
+
+    categoriesDivContainer.appendChild(categoriesLeft).id = 'categories_left';
+    categoriesLeft.className = 'categories_container';
+    categoriesDivContainer.appendChild(categoriesCenter).id = 'categories_center';
+    categoriesCenter.className = 'categories_container';
+    categoriesDivContainer.appendChild(categoriesRight).id = 'categories_right';
+    categoriesRight.className = 'categories_container';
+    categoriesCenter.appendChild(btn);
   }
 
 }
