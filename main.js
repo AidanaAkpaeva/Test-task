@@ -337,10 +337,6 @@ function changeFocus(e) {
       indexCol = array.indexOf(document.activeElement);
       indexRow = i;
     }
-    else if (indexRow === -1) {
-      indexRow = array.indexOf(document.activeElement);
-      indexCol = j;
-    }
   }
 
   var nextIndexCol = 0;
@@ -354,7 +350,7 @@ function changeFocus(e) {
   }
   //вправо
   else if (e.keyCode === 39) {
-    nextIndexCol = indexCol < arrayFocusableElem[indexRow].length ? indexCol + 1 : arrayFocusableElem[indexRow].length;
+    nextIndexCol = indexCol < arrayFocusableElem[indexRow].length ? indexCol + 1 : arrayFocusableElem[indexRow].length-1;
     arrayFocusableElem[indexRow][nextIndexCol].focus();
     arrayFocusableElem[indexRow][nextIndexCol].click();
   }
@@ -362,14 +358,14 @@ function changeFocus(e) {
   //вверх
   else if (e.keyCode === 38) {
     nextIndexRow = indexRow > 0 ? indexRow - 1 : 0;
-    arrayFocusableElem[nextIndexRow][indexCol].focus();
-    arrayFocusableElem[nextIndexRow][indexCol].click();
+    arrayFocusableElem[nextIndexRow][0].focus();
+    arrayFocusableElem[nextIndexRow][0].click();
   }
   //вниз
   else if (e.keyCode === 40) {
-    nextIndexRow = indexRow < arrayFocusableElem[indexCol].length ? indexRow + 1 : arrayFocusableElem[indexCol].length;
-    arrayFocusableElem[nextIndexRow][indexCol].focus();
-    arrayFocusableElem[nextIndexRow][indexCol].click();
+    nextIndexRow = indexRow < arrayFocusableElem[indexRow].length ? indexRow + 1 : arrayFocusableElem[indexRow].length-1;
+    arrayFocusableElem[nextIndexRow][0].focus();
+    arrayFocusableElem[nextIndexRow][0].click();
   }
 }
 
@@ -451,12 +447,14 @@ function setDescripltionFilm(genreName) {
         moviesRight.appendChild(arrMovies[i]);
       }
       tabNameMovies.appendChild(arrMovies[active_elem_index]);
+      filmName.focus();
     }
 
     mainMovies.appendChild(tabDescrMovies).id = 'tab_descr_movies';
 
     if (filmName.id === 'film_name_0') {
       filmName.click();
+      filmName.focus();
       filmName.className += ' btn_movies-active';
     }
   }
@@ -514,11 +512,13 @@ function setCategories() {
       }
 
       categoriesCenter.appendChild(arrCategories[active_elem_index]);
+      btn.focus();
     }
 
     //делаем кнопку активной после загрузки
     if (btn.id === 'btn_detective') {
       btn.click();
+      btn.focus();
       btn.className += ' btn_categories-active';
     }
 
